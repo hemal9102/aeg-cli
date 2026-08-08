@@ -1,0 +1,2 @@
+[console_scripts]
+aeg = aeg.cli:app

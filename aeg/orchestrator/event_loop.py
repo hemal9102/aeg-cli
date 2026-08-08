@@ -51,9 +51,23 @@ class ExecutionLoop:
             # Spawn isolated sandbox for the task
             worktree_path = self.sandbox.spawn_worktree(f"task_{task.id}")
             
-            # TODO: LLM agent execution would go here.
-            # Using Ponytail dummy execution for now:
-            self.sandbox.run_in_sandbox(worktree_path, ["echo", "Running agent logic..."])
+            # Wake up the Brain
+            from aeg.agents.base import BaseAgent
+            agent = BaseAgent(role=task.assigned_to)
+            
+            prompt = f"You are acting as a {task.assigned_to.value}. Your task is to: {task.description}. Reply exactly with the shell commands you wish to execute in the sandbox, separated by newlines."
+            
+            llm_response = agent.run_prompt(prompt)
+            
+            # Ponytail execution parsing: just assume the LLM spit out a command string for now
+            # In a full MCP setup, this would parse JSON tool schemas.
+            commands_to_run = llm_response.strip().split("\n")
+            
+            for cmd in commands_to_run:
+                # Basic safety filter
+                if cmd.startswith("```") or not cmd.strip():
+                    continue
+                self.sandbox.run_in_sandbox(worktree_path, cmd.strip().split(" "))
             
             # Verification Phase
             print(f"[{task.assigned_to.value.upper()}] Pushing through Truth Gate...")
