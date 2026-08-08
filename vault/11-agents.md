@@ -4,23 +4,20 @@ The system uses dynamic task decomposition rather than running all agents blindl
 
 ## Core Agents
 
-1. **Orchestrator (CTO)**
-   - Responsible for overall dynamic task planning.
-   - Decomposes high-level requirements into DAG tasks (Task 1 -> Task 2).
-2. **Architect**
-   - Reviews system design, sets constraints, reads codebase graph.
-3. **Researcher (SEO/Growth)**
-   - GSC, GA4, Bing integrations. Analyzes traffic and performance facts.
-4. **Developer**
-   - Implementation agent. Writes code within isolated Git Worktrees.
-5. **Tester & Security**
-   - Writes API contracts, pytest fixtures, and Playwright scripts. 
-   - Uses OWASP ZAP, Semgrep for vulns.
-6. **Reviewer**
-   - Distinct from Developer. Critiques the code (e.g., via `adversarial-review-master-skill`).
-7. **Fact Verifier (The Truth Gate)**
-   - Determines if the Developer's claims are true.
-   - Demands hard evidence (passing tests, HTTP 200s, DB state).
+1. **Growth Orchestrator (Director)**
+   - Responsible for overall dynamic task planning for growth campaigns.
+   - Decomposes high-level requirements (e.g. "Rank for keyword X") into DAG tasks.
+2. **AEO Architect**
+   - Specializes in Answer Engine Optimization. Designs JSON-LD schemas, Knowledge Graph integrations, and Semantic HTML microdata.
+3. **GEO Writer & Context Engineer**
+   - Specializes in Generative Engine Optimization. Restructures page content, semantic density, and keyword clustering to dominate Perplexity/ChatGPT RAG systems.
+4. **Technical SEO Engineer**
+   - The implementation agent. Writes code for programmatic sitemaps, caching, canonicals, robots.txt, and fixes Core Web Vitals (LCP, CLS, INP) directly in Git Worktrees.
+5. **Growth Researcher**
+   - Interfaces with Google Search Console (GSC), IndexNow APIs, and Analytics to fetch real-world ranking and indexing facts.
+6. **The Truth Gate (Fact Verifier)**
+   - Determines if the Engineer's claims are true.
+   - Demands hard evidence (passing Lighthouse audits, Schema.org validation, HTTP 200 checks).
    - Blocks action if unverified.
 
 ## Token Budgets
