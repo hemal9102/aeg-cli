@@ -12,11 +12,12 @@ class TaskState(str, Enum):
     FAILED = "failed"
 
 class AgentRole(str, Enum):
-    ORCHESTRATOR = "orchestrator"
-    ARCHITECT = "architect"
-    DEVELOPER = "developer"
-    TESTER = "tester"
-    VERIFIER = "verifier"
+    ORCHESTRATOR = "growth_orchestrator"
+    AEO_ARCHITECT = "aeo_architect"
+    GEO_WRITER = "geo_writer"
+    TECHNICAL_SEO = "technical_seo_engineer"
+    RESEARCHER = "growth_researcher"
+    TRUTH_GATE = "truth_gate_verifier"
 
 class ProjectState(BaseModel):
     name: str

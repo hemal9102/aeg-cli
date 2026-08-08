@@ -11,38 +11,59 @@ class DAGPlanner:
 
     def plan_tasks(self, goal: str) -> List[Task]:
         """
-        Stub logic for LLM-based DAG planning.
-        In a real system, this calls an LLM to decompose the goal.
+        Uses the Orchestrator LLM to decompose a goal into a DAG.
         """
-        print(f"Planning tasks for goal: {goal}")
+        import json
+        from aeg.agents.base import BaseAgent
         
-        # Example hardcoded DAG for demonstration:
-        # Task 1 (Research) -> Task 2 (Implement) -> Task 3 (Verify)
-        t1_id = f"task_{uuid.uuid4().hex[:8]}"
-        t2_id = f"task_{uuid.uuid4().hex[:8]}"
-        t3_id = f"task_{uuid.uuid4().hex[:8]}"
+        print(f"[ORCHESTRATOR] Planning tasks for goal: {goal}")
+        agent = BaseAgent(role=AgentRole.ORCHESTRATOR)
         
-        t1 = Task(
-            id=t1_id,
-            description="Analyze requirements and architecture",
-            assigned_to=AgentRole.ARCHITECT
-        )
+        prompt = f"""
+You are the Growth Orchestrator for an SEO/AEO/GEO automation platform.
+Break the following goal into a sequence of dependent tasks.
+Goal: {goal}
+
+Available roles: {', '.join([r.value for r in AgentRole if r != AgentRole.ORCHESTRATOR])}
+
+Return EXACTLY a JSON array of objects, with no markdown formatting.
+Schema:
+[
+  {{
+    "id": "task_1",
+    "description": "string",
+    "assigned_to": "role_string",
+    "dependencies": []
+  }}
+]
+"""
+        response_text = agent.run_prompt(prompt).strip()
         
-        t2 = Task(
-            id=t2_id,
-            description="Implement the logic in a sandboxed worktree",
-            assigned_to=AgentRole.DEVELOPER,
-            dependencies=[t1_id]
-        )
-        
-        t3 = Task(
-            id=t3_id,
-            description="Verify implementation via Truth Gate",
-            assigned_to=AgentRole.VERIFIER,
-            dependencies=[t2_id]
-        )
-        
-        return [t1, t2, t3]
+        # Clean up possible markdown code blocks if the LLM ignores instructions
+        if response_text.startswith("```json"):
+            response_text = response_text[7:]
+        if response_text.startswith("```"):
+            response_text = response_text[3:]
+        if response_text.endswith("```"):
+            response_text = response_text[:-3]
+            
+        try:
+            tasks_data = json.loads(response_text.strip())
+        except json.JSONDecodeError as e:
+            raise RuntimeError(f"Orchestrator failed to return valid JSON: {str(e)}\nResponse: {response_text}")
+            
+        planned_tasks = []
+        for td in tasks_data:
+            planned_tasks.append(
+                Task(
+                    id=td["id"],
+                    description=td["description"],
+                    assigned_to=AgentRole(td["assigned_to"]),
+                    dependencies=td.get("dependencies", [])
+                )
+            )
+            
+        return planned_tasks
 
     def get_executable_tasks(self, tasks: List[Task]) -> List[Task]:
         """
