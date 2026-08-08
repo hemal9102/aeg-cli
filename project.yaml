@@ -1,0 +1,42 @@
+project:
+  name: aeg-cli
+  type: autonomous_engineering_platform
+  description: Autonomous Engineering & Growth CLI (aeg). A fact-first autonomous MAS (Multi-Agent System) for executing engineering, SEO, testing, and scaling tasks securely on local and remote codebases.
+
+stack:
+  core:
+    - python-3.12
+    - typer
+    - pydantic
+    - asyncio
+  state:
+    - sqlite
+    - duckdb
+  code_intelligence:
+    - headless-lsp
+    - pyright
+    - tsserver
+  testing_and_browser:
+    - pytest
+    - playwright
+    - httpx
+    - docker-sandbox
+
+repositories:
+  github:
+    owner: hk
+    repo: aeg-cli
+
+environments:
+  development: local
+  production: local-cli
+
+constraints:
+  - DO NOT execute destructive AI actions on production unverified.
+  - Require Truth Gate verification for all changes.
+  - Isolate tasks using Git Worktrees to prevent race conditions.
+
+goals:
+  - Zero/near-zero false positives.
+  - Provide a reusable CLI for arbitrary codebases (FastAPI, Next.js, Laravel, etc.).
+  - Integrate deeply with a Knowledge Vault (Obsidian/Markdown + SQLite).

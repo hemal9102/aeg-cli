@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aeg-cli"
+version = "0.1.0"
+description = "Autonomous Engineering & Growth CLI"
+requires-python = ">=3.10"
+dependencies = [
+    "typer>=0.9.0",
+    "pydantic>=2.0.0",
+    "pyyaml>=6.0"
+]
+
+[project.scripts]
+aeg = "aeg.cli:app"
