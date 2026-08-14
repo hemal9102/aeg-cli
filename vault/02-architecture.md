@@ -35,3 +35,12 @@ A unified persistence layer handling:
 - **Architecture Decisions:** Why certain tech was chosen.
 - **Incidents:** Failures to prevent repeating mistakes.
 - **Evidence:** Links to raw data proving facts (Traces, Screenshots).
+
+## The Analytics Playground Architecture
+This project is an **Autonomous Data Analysis Playground**. It is structurally designed to ingest external data (GA4, GSC, Trends) and synthesize optimizations (AEO/GEO) entirely in isolation.
+
+**Data Flow:**
+1. **Ingest**: Read from external APIs via specialized agents.
+2. **Synthesize**: LLM processing to generate AEO schema payloads.
+3. **Validate**: Local validation using MCPs (Rich Results Test).
+4. **Export**: Final payloads are exported to the local `/report` directory.

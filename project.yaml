@@ -35,6 +35,9 @@ constraints:
   - DO NOT execute destructive AI actions on production unverified.
   - Require Truth Gate verification for all changes.
   - Isolate tasks using Git Worktrees to prevent race conditions.
+  - PRIME_DIRECTIVE_1: STRICT READ-ONLY FOR EXTERNAL SYSTEMS. The MAS must never attempt to mutate, push, or execute destructive actions on external codebases, APIs, or live production environments.
+  - PRIME_DIRECTIVE_2: LOCAL SCOPE ONLY. The MAS is only permitted to write generated payloads and insights into the local `report/` and `vault/` directories.
+  - PRIME_DIRECTIVE_3: PLAYGROUND MODE. This environment is an analytical playground, not a deployment pipeline.
 
 goals:
   - Zero/near-zero false positives.

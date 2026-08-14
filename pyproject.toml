@@ -11,11 +11,17 @@ dependencies = [
     "typer>=0.9.0",
     "pydantic>=2.0.0",
     "pyyaml>=6.0",
-    "httpx>=0.27.0"
+    "httpx>=0.27.0",
+    "google-analytics-data>=0.23.0",
+    "google-analytics-admin>=0.30.1",
+    "google-auth>=2.40.0",
+    "mcp>=1.24.0",
+    "google-adk>=1.29.0"
 ]
 
 [project.scripts]
 aeg = "aeg.cli:app"
+analytics-mcp = "aeg.analytics_mcp.server:run_server"
 
 [tool.setuptools.packages.find]
 include = ["aeg*"]

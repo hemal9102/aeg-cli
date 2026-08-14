@@ -1,8 +1,14 @@
 # Autonomous Engineering & Growth CLI (AEG)
 
-AEG is a terminal-driven, multi-agent AI framework designed for strict execution, isolation, and safety. Rather than giving LLMs raw access to your computer, AEG restricts AI agents inside isolated Git worktrees and forces their outputs through an idempotent verification layer (The Truth Gate) before merging code.
+AEG is a terminal-driven, multi-agent AI framework specifically designed for **SEO, AEO, and GEO automation**. Rather than giving LLMs raw access to your computer, AEG restricts AI agents inside isolated Git worktrees and forces their optimizations through an idempotent verification layer (The Truth Gate) before merging code to production.
 
-## 🌟 Core Philosophy
+## 🌟 Core Focus
+
+- **SEO (Search Engine Optimization):** Automating structural audits, programmatic sitemaps, indexing (GSC/IndexNow), and technical health.
+- **AEO (Answer Engine Optimization):** Structuring data (JSON-LD, Microdata) perfectly so answer engines can extract facts instantly.
+- **GEO (Generative Engine Optimization):** Optimizing content architectures and context windows so AI models (ChatGPT, Perplexity, Claude) rank your pages highly.
+
+## 🛡️ Engineering Philosophy
 
 1. **AI is NOT the source of truth:** Code is driven by facts, tools, and evidence—not hallucinations.
 2. **Strict Sandbox Isolation:** All tasks spawn unique Git Worktrees. If an agent breaks the code, the worktree is simply deleted. The main branch is never touched until tests pass.

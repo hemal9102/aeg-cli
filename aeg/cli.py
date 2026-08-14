@@ -1,7 +1,14 @@
 import typer
 from pathlib import Path
 import os
+import asyncio
+import logging
 from aeg.core.vault import KnowledgeVault
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
+)
 
 app = typer.Typer(help="Autonomous Engineering & Growth CLI (AEG)")
 
@@ -34,7 +41,7 @@ def loop(task: str):
         from aeg.orchestrator.event_loop import ExecutionLoop
         vault = KnowledgeVault(cwd)
         pipeline = ExecutionLoop(vault, cwd)
-        pipeline.start(task)
+        asyncio.run(pipeline.start(task))
     except Exception as e:
         typer.echo(f"[ERROR] Pipeline failed: {str(e)}", err=True)
 

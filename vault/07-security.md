@@ -17,3 +17,14 @@ Testing frameworks (especially `pytest-playwright` running headless Chromium) an
 ### Mitigation: PID Jails & Ephemeral Ports
 - The Orchestrator manages task lifecycles via a strict Process Group or PID Jail. If the task is terminated, the entire process tree is killed.
 - Agents cannot hardcode ports. Ephemeral ports (e.g., `localhost:43128`) must be allocated dynamically and injected via `.env.test` into the worktrees.
+
+## 3. System Permissions & Prime Directives
+**Classification**: STRICT READ-ONLY (External) / LOCAL-WRITE (Internal)
+
+### 3.1 External System Permissions
+- **Permitted**: Polling public APIs, fetching GA4/GSC analytics (Read-Only tokens), triggering Apify web scrapers.
+- **Strictly Denied**: Pushing commits to external Git repositories, deploying code via SSH/FTP, writing to production databases.
+
+### 3.2 Local File System Permissions
+- **Permitted**: Writing generated reports to `/report`. Updating knowledge graphs in `/vault`.
+- **Strictly Denied**: Modifying system files outside the `big_fish_SAGEO` working directory.
